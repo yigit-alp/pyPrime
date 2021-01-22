@@ -44,8 +44,8 @@ def SoZ_P5(N):
 
         if prime > sqrtN:
             break
-        
-        print(f"Generating Prime Map: {prime / sqrtN * 100}%")
+
+        print(f"Generating Prime Map: {prime / sqrtN * 100:0.2f}%")
 
         prmstep = prime * rescnt
 
@@ -87,3 +87,22 @@ def loadStoredPrimes(fName="pickledPrimes.pickle"):
     with open(fName, "rb") as pf:
         primeArray = pickle.load(pf)
     return primeArray
+
+
+class isPrimeHandler:
+    def __init__(self, map=loadStoredPrimes()):
+        self.__map = map
+        self.__maplen = len(map)
+        self.__residues = [1, 7, 11, 13, 17, 19, 23, 29]
+        if self.__maplen == 0:
+            self.__max = 0
+        else:
+            self.__max = (self.__maplen // 8) * 30 + \
+                self.__residues[self.__maplen % 8]
+
+    def posGen(N):
+        #DOESNT WORK
+        pos = {}
+        for i in range(8):
+            pos[self.__residues[i]] = i - 1
+        return (N // 30) * 8 + pos[N % 30] 
