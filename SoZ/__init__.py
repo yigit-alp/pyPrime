@@ -1,4 +1,5 @@
 from math import sqrt
+import pickle
 
 
 def SoZ_P5(N):
@@ -43,6 +44,8 @@ def SoZ_P5(N):
 
         if prime > sqrtN:
             break
+        
+        print(f"Generating Prime Map: {prime / sqrtN * 100}%")
 
         prmstep = prime * rescnt
 
@@ -72,3 +75,15 @@ def P5_PrimeConvert(prms):
         if prms[i]:
             primes.append(modk + residues[r])
     return primes
+
+
+def storePrimes(N, fName="pickledPrimes.pickle"):
+    primeArray = SoZ_P5(N)
+    with open(fName, "wb") as pf:
+        pickle.dump(primeArray, pf)
+
+
+def loadStoredPrimes(fName="pickledPrimes.pickle"):
+    with open(fName, "rb") as pf:
+        primeArray = pickle.load(pf)
+    return primeArray
