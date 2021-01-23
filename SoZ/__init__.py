@@ -121,3 +121,6 @@ class isPrimeHandler:
             return self.__map[self.posGen(N)]
         else:
             return False
+
+
+#jnddsfl
