@@ -93,16 +93,31 @@ class isPrimeHandler:
     def __init__(self, map=loadStoredPrimes()):
         self.__map = map
         self.__maplen = len(map)
-        self.__residues = [1, 7, 11, 13, 17, 19, 23, 29]
+        self.__residues = [1, 7, 11, 13, 17, 19, 23, 29, 31]
         if self.__maplen == 0:
             self.__max = 0
         else:
             self.__max = (self.__maplen // 8) * 30 + \
                 self.__residues[self.__maplen % 8]
 
-    def posGen(N):
-        #DOESNT WORK
+    def posGen(self, N):
+        # MAKE SURE THAT N IS IN MAP BEFORE USING
         pos = {}
-        for i in range(8):
+        for i in range(len(self.__residues)):
             pos[self.__residues[i]] = i - 1
-        return (N // 30) * 8 + pos[N % 30] 
+        return (N // 30) * 8 + pos[N % 30]
+
+    def isInMap(self, N):
+        if N <= self.__max:
+            return N % 30 in self.__residues
+        else:
+            raise Exception("Number greater than map scope. Consider generating a bigger map.")
+
+
+    def isPrime(self, N):
+        if N < 7:
+            return N in [2, 3, 5]
+        if self.isInMap(N):
+            return self.__map[self.posGen(N)]
+        else:
+            return False
